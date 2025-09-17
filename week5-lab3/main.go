@@ -45,6 +45,7 @@ func main (){
 	api := r.Group("/api/v1")
 	{
 		api.GET("/students", getStudents)
+	
 	}
 
 	r.Run(":8080")
