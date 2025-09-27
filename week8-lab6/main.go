@@ -71,8 +71,9 @@ func getAllBooks(c *gin.Context) {
     // ลูกค้าถาม "มีหนังสืออะไรบ้าง"
     if year != ""{
     rows, err = db.Query("SELECT id, title, author, isbn, year, price, created_at, updated_at FROM books WHERE year = $1", year )
-    }
+    } else {
     rows, err = db.Query("SELECT id, title, author, isbn, year, price, created_at, updated_at FROM books")
+    }
     if err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
         return
@@ -217,7 +218,7 @@ func main(){
 
 	api := r.Group("/api/v1")
 	{
-		api.GET("/books", getAllBooks)
+		api.GET("/books/:year", getAllBooks)
 	 	api.GET("/books/:id", getBook)
 	 	api.POST("/books", createBook)
 	 	api.PUT("/books/:id", updateBook)
