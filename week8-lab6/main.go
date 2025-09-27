@@ -67,10 +67,11 @@ func initDB(){
 func getAllBooks(c *gin.Context) {
     var rows *sql.Rows
     var err error
+    year := c.Param("year")
     // ลูกค้าถาม "มีหนังสืออะไรบ้าง"
-    if/*xx != ""{
-    rows, err = db.Query("SELECT id, title, author, isbn, year, price, created_at, updated_at FROM books WHERE")
-    }*/
+    if year != ""{
+    rows, err = db.Query("SELECT id, title, author, isbn, year, price, created_at, updated_at FROM books WHERE year = $1", year )
+    }
     rows, err = db.Query("SELECT id, title, author, isbn, year, price, created_at, updated_at FROM books")
     if err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
